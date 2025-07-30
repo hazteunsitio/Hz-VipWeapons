@@ -1,5 +1,5 @@
 # Hz VIP Weapons - Sistema de Armas VIP para FiveM
-
+[![WEAPON.jpg](https://i.postimg.cc/wvVdm6x2/WEAPON.jpg)](https://postimg.cc/wy7PKYmR)
 ![HZ Logo](https://img.shields.io/badge/Desarrollado%20por-HZ%20CodigosParaJuegos-blue?style=for-the-badge)
 ![Version](https://img.shields.io/badge/Version-1.0.0-green?style=for-the-badge)
 ![Framework](https://img.shields.io/badge/Framework-ESX-red?style=for-the-badge)
