@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test VIP Weapons Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); margin: 0; padding: 20px; min-height: 100vh;">
+    <button onclick="showTestPanel()" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 20px;">Mostrar Panel</button>
+    
+    <div class="container" id="weaponPanel" style="display: none;">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1 class="title">VIP WEAPONS PANEL</h1>
+                </div>
+                <button class="close-btn" onclick="hideTestPanel()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="status-bar">
+                <i class="fas fa-clock"></i>
+                <span id="currentTime">00:00:00</span>
+                <i class="fas fa-user-shield"></i>
+                <span>Panel de Administración</span>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('search')">
+                <i class="fas fa-search"></i>
+                <span>Buscar Jugador</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('give')">
+                <i class="fas fa-gift"></i>
+                <span>Otorgar Arma</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('manage')">
+                <i class="fas fa-tools"></i>
+                <span>Administrar</span>
+            </button>
+        </div>
+
+        <!-- Search Tab Content -->
+        <div class="tab-content active" id="searchTab">
+            <div class="section-header">
+                <h2><i class="fas fa-search"></i> Buscar Armas de Jugador</h2>
+                <p>Consulta las armas VIP que posee un jugador específico</p>
+            </div>
+            <div class="search-form">
+                <div class="form-group">
+                    <label for="playerIdSearch">ID del Jugador:</label>
+                    <input type="number" id="playerIdSearch" class="form-control" placeholder="Ingresa el ID del jugador (ej: 1, 2, 3...)">
+                </div>
+                <button class="btn btn-primary" onclick="testSearch()">
+                    <i class="fas fa-search"></i>
+                    <span>Buscar Armas</span>
+                </button>
+            </div>
+            <div id="weaponListSection" class="weapons-container">
+                <div class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <p>Ingresa un ID de jugador para ver sus armas VIP</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Give Weapon Tab Content -->
+        <div class="tab-content" id="giveTab">
+            <div class="section-header">
+                <h2><i class="fas fa-gift"></i> Otorgar Arma VIP</h2>
+                <p>Concede armas VIP a jugadores específicos</p>
+            </div>
+            <div class="give-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="weaponSelect">Seleccionar Arma VIP:</label>
+                        <select id="weaponSelect" class="form-control">
+                            <option value="">Selecciona un arma...</option>
+                            <option value="WEAPON_ASSAULTRIFLE">AK-47</option>
+                            <option value="WEAPON_CARBINERIFLE">M4A1</option>
+                            <option value="WEAPON_PISTOL">Pistola</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="playerIdGive">ID del Jugador:</label>
+                        <input type="number" id="playerIdGive" class="form-control" placeholder="Ingresa el ID del jugador">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-success" onclick="testGiveWeapon()">
+                        <i class="fas fa-gift"></i>
+                        <span>Otorgar Arma</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Tab Content -->
+        <div class="tab-content" id="manageTab">
+            <div class="section-header">
+                <h2><i class="fas fa-tools"></i> Administración de Armas</h2>
+                <p>Herramientas avanzadas para la gestión de armas VIP</p>
+            </div>
+            
+            <div class="management-grid">
+                <div class="management-card">
+                    <div class="card-header">
+                        <i class="fas fa-trash-alt"></i>
+                        <h3>Limpiar Armas</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Remover todas las armas VIP de un jugador específico</p>
+                        <div class="form-group">
+                            <label for="clearPlayerId">ID del Jugador:</label>
+                            <input type="number" id="clearPlayerId" class="form-control" placeholder="Ingresa el ID del jugador">
+                        </div>
+                        <button class="btn btn-danger" onclick="testClearWeapons()">
+                            <i class="fas fa-trash-alt"></i>
+                            <span>Limpiar Todas las Armas</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="management-card">
+                    <div class="card-header">
+                        <i class="fas fa-users"></i>
+                        <h3>Jugadores VIP</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Visualizar la lista de jugadores con acceso VIP</p>
+                        <button class="btn btn-secondary" onclick="testShowVipPlayers()">
+                            <i class="fas fa-list"></i>
+                            <span>Ver Jugadores VIP</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Test functions
+        function showTestPanel() {
+            $('#weaponPanel').css('display', 'flex').show();
+            updateClock();
+        }
+        
+        function hideTestPanel() {
+            $('#weaponPanel').hide();
+        }
+        
+        function switchTab(tabName) {
+            console.log('Switching to tab:', tabName);
+            $('.tab-btn').removeClass('active');
+            $('.tab-content').removeClass('active');
+            $(`.tab-btn[onclick="switchTab('${tabName}')"]`).addClass('active');
+            $(`#${tabName}Tab`).addClass('active');
+        }
+        
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            $('#currentTime').text(timeString);
+        }
+        
+        function testSearch() {
+            const playerId = $('#playerIdSearch').val();
+            if (!playerId) {
+                alert('Por favor ingresa un ID de jugador');
+                return;
+            }
+            
+            $('#weaponListSection').html(`
+                <div class="weapon-card">
+                    <div class="weapon-info">
+                        <div class="weapon-name">AK-47 VIP</div>
+                        <div class="weapon-details">
+                            <i class="fas fa-bullets"></i> Munición: 250 | 
+                            <i class="fas fa-cogs"></i> Componentes: 3
+                        </div>
+                    </div>
+                    <button class="remove-btn" onclick="alert('Arma removida!')">
+                        <i class="fas fa-trash"></i>
+                        Remover
+                    </button>
+                </div>
+                <div class="weapon-card">
+                    <div class="weapon-info">
+                        <div class="weapon-name">M4A1 VIP</div>
+                        <div class="weapon-details">
+                            <i class="fas fa-bullets"></i> Munición: 300 | 
+                            <i class="fas fa-cogs"></i> Componentes: 5
+                        </div>
+                    </div>
+                    <button class="remove-btn" onclick="alert('Arma removida!')">
+                        <i class="fas fa-trash"></i>
+                        Remover
+                    </button>
+                </div>
+            `);
+        }
+        
+        function testGiveWeapon() {
+            const weapon = $('#weaponSelect').val();
+            const playerId = $('#playerIdGive').val();
+            if (!weapon || !playerId) {
+                alert('Por favor selecciona un arma e ingresa un ID de jugador');
+                return;
+            }
+            alert(`Arma ${weapon} otorgada al jugador ${playerId}`);
+        }
+        
+        function testClearWeapons() {
+            const playerId = $('#clearPlayerId').val();
+            if (!playerId) {
+                alert('Por favor ingresa un ID de jugador');
+                return;
+            }
+            if (confirm(`¿Remover todas las armas del jugador ${playerId}?`)) {
+                alert('Todas las armas han sido removidas');
+            }
+        }
+        
+        function testShowVipPlayers() {
+            alert('Función en desarrollo - Lista de jugadores VIP');
+        }
+        
+        // Initialize
+        $(document).ready(function() {
+            setInterval(updateClock, 1000);
+        });
+        
+        // ESC key handler
+        $(document).keyup(function(e) {
+            if (e.keyCode === 27) {
+                hideTestPanel();
+            }
+        });
+    </script>
+</body>
+</html>
